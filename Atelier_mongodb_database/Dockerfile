@@ -4,5 +4,5 @@ ADD . /products_database
 WORKDIR /products_database
 RUN npm install
 
-EXPOSE 4234
+EXPOSE 4324
 CMD ["node", "index.js"]

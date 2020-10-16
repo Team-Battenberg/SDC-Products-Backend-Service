@@ -4,5 +4,5 @@ ADD . /products_service
 WORKDIR /products_service
 RUN npm install
 
-EXPOSE 4231
+EXPOSE 4321
 CMD ["node", "index.js"]
