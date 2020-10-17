@@ -23,7 +23,31 @@ module.exports = {
       console.log('error getting the products from db', err);
     })
   },
-  getProductsById: function () {
+  getProductsById: function (id) {
+    var product = Product.findOne({
+        where: {
+          product_id: id
+        }
+    })
 
+    var features = Feature.findAll({
+      attributes: ['feature','value'],
+      where: {
+        product_id: id
+      }
+    })
+
+  return Promise.all([product, features])
+    .then((responses) => {
+      var product = responses[0].dataValues;
+      var features = responses[1];
+      console.log(features);
+      product['features'] = features;
+      console.log(product)
+      return product;
+    })
+    .catch((err) => {
+      console.log('error finding that product in db', err);
+    })
   }
 }
