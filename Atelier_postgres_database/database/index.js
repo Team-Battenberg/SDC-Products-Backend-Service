@@ -12,7 +12,7 @@ const DB = new Sequelize('SDC-test', null, null, {
     min: 0,
     idle: 10000
   },
-  schema: 'products-database-v2'
+  schema: 'products-database-v3'
 });
 
 DB.authenticate()
