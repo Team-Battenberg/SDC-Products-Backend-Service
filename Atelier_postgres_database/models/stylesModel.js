@@ -34,7 +34,7 @@ module.exports = {
 
       var styleSkuSets = styleIds.map((currId) => {
         return Sku.findAll({
-          attributes: ['size', 'quantity'],
+          attributes: ['sku_id','size', 'quantity'],
           where: {
             style_id: currId
           }
@@ -51,7 +51,9 @@ module.exports = {
           resultObj.results[pi].photos.push(entry.dataValues);
         }));
         resultSet[si].forEach((entry => {
-          resultObj.results[pi].skus[entry.dataValues.size] = entry.dataValues.quantity
+          resultObj.results[pi].skus[entry.dataValues.sku_id] = {}
+          resultObj.results[pi].skus[entry.dataValues.sku_id].size = entry.dataValues.size
+          resultObj.results[pi].skus[entry.dataValues.sku_id].quantity = entry.dataValues.quantity
         }))
       }
       console.log(resultObj)
