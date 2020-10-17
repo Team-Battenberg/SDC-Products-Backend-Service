@@ -42,10 +42,10 @@ DROP TABLE IF EXISTS "products";
 CREATE TABLE "products"
 (
  "product_id"    integer UNIQUE NOT NULL,
- "name"          char(75) NOT NULL,
- "slogan"        char(150) NOT NULL,
+ "name"          CHARACTER VARYING(75) NOT NULL,
+ "slogan"        CHARACTER VARYING(150) NOT NULL,
  "description"   text NOT NULL,
- "category"      char(40) NOT NULL,
+ "category"      CHARACTER VARYING(40) NOT NULL,
  "default_price" integer NOT NULL,
  CONSTRAINT "PK_products" PRIMARY KEY ( "product_id" )
 );
@@ -78,7 +78,7 @@ CREATE TABLE "product_styles"
 (
  "style_id"       integer UNIQUE NOT NULL,
  "product_id"     integer NOT NULL,
- "name"           char(75) NOT NULL,
+ "name"           CHARACTER VARYING(75) NOT NULL,
  "sale_price"     integer NOT NULL,
  "original_price" integer NOT NULL,
  "default_style"  integer NOT NULL,
@@ -97,8 +97,8 @@ CREATE TABLE "features"
 (
  "feature_id" integer UNIQUE NOT NULL,
  "product_id" integer NOT NULL,
- "feature"    char(50) NOT NULL,
- "value"      char(50) NULL,
+ "feature"    CHARACTER VARYING(50) NOT NULL,
+ "value"      CHARACTER VARYING(50) NULL,
  CONSTRAINT "PK_features" PRIMARY KEY ( "feature_id" ),
  CONSTRAINT "FK_121" FOREIGN KEY ( "product_id" ) REFERENCES "products" ( "product_id" )
 );
@@ -114,7 +114,7 @@ CREATE TABLE "skus"
 (
  "sku_id"   integer UNIQUE NOT NULL,
  "style_id" integer NOT NULL,
- "size"     char(10) NOT NULL,
+ "size"     CHARACTER VARYING(10) NOT NULL,
  "quantity" integer NOT NULL,
  CONSTRAINT "PK_skus" PRIMARY KEY ( "sku_id" ),
  CONSTRAINT "FK_109" FOREIGN KEY ( "style_id" ) REFERENCES "product_styles" ( "style_id" )
