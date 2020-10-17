@@ -13,7 +13,7 @@ module.exports = {
     }
     productsModel.getProducts(page,count)
       .then((results) => {
-        res.status(202).send(results)
+        res.status(200).send(results)
       })
       .catch((err) => {
         console.log('error sending results to client', err);

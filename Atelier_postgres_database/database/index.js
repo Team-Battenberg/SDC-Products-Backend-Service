@@ -74,7 +74,7 @@ const Style = DB.define('product_styles', {
     type: DataTypes.INTEGER,
     allowNull: false
   },
-  default_sale: {
+  default_style: {
     type: DataTypes.INTEGER,
     allowNull: false
   }
