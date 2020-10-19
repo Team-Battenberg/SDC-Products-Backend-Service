@@ -1,12 +1,8 @@
--- DROP DATABASE IF EXISTS "SDC-products-database"
+-- DROP DATABASE IF EXISTS "SDC-products"
 --     WITH
 --     OWNER = joedimartino;
 
--- CREATE SCHEMA public
---     AUTHORIZATION postgres;
-
-
--- CREATE DATABASE "SDC-products-database"
+-- CREATE DATABASE "SDC-products"
 --     WITH
 --     OWNER = joedimartino
 --     ENCODING = 'UTF8'
@@ -16,18 +12,17 @@
 
 --     CONNECTION LIMIT = -1;
 
--- CREATE SCHEMA "products-database-v2"
+-- CREATE SCHEMA "products-database-v3"
 --     AUTHORIZATION joedimartino;
 
--- COMMENT ON SCHEMA "products-database-v2"
+-- COMMENT ON SCHEMA "products-database-v3"
 --     IS 'Product Micro-service Database';
 
--- GRANT ALL ON SCHEMA "products-database-v2" TO PUBLIC;
+-- GRANT ALL ON SCHEMA "products-database-v3" TO PUBLIC;
 
--- GRANT ALL ON SCHEMA "products-database-v2" TO joedimartino;
+-- GRANT ALL ON SCHEMA "products-database-v3" TO joedimartino;
 
-
---SCHEMA: products-database-v1;
+--SCHEMA: products-database-v3;
 
 
 DROP TABLE IF EXISTS "products-database-v3"."product_photos";
