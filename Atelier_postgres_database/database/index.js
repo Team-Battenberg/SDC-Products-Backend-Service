@@ -1,23 +1,28 @@
 const { Sequelize, DataTypes } = require('sequelize');
-const DB = new Sequelize(process.env.PGDATABASE, process.env.PGUSER, process.env.PGPASSWORD, {
-  host: process.env.PGHOST,
+const HOST = process.env.PGHOST || '127.0.0.1'
+const DATABASE = process.env.PGDATABASE || 'SDC-test'
+const USER = process.env.PGUSER || null
+const PASSWORD = process.env.PGPASSWORD || null
+const PORT = 5432
+const DB = new Sequelize(DATABASE, USER, PASSWORD, {
+  host: HOST,
   port: 5432,
   dialect: 'postgres',
   define: {
     freezeTableName: true,
     timestamps: false
   },
-  // pool: {
-  //   max: 5,
-  //   min: 0,
-  //   idle: 10000
-  // },
+  pool: {
+    max: 5,
+    min: 0,
+    idle: 10000
+  },
   schema: 'products-database-v3'
 });
 
 DB.authenticate()
   .then(function() {
-      console.log(`Connection has been established successfully on ${process.env.PGHOST} ${process.env.PORT}`);
+      console.log(`Connection has been established successfully on ${HOST} ${PORT}`);
   })
   .catch(function (err) {
       console.log('Unable to connect to the database:', err);

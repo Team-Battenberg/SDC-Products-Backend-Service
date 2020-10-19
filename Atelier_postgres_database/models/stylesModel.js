@@ -56,7 +56,6 @@ module.exports = {
           resultObj.results[pi].skus[entry.dataValues.sku_id].quantity = entry.dataValues.quantity
         }))
       }
-      console.log(resultObj)
       return resultObj;
     })
     .catch((err) => {

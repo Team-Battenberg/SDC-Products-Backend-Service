@@ -41,9 +41,7 @@ module.exports = {
     .then((responses) => {
       var product = responses[0].dataValues;
       var features = responses[1];
-      console.log(features);
       product['features'] = features;
-      console.log(product)
       return product;
     })
     .catch((err) => {

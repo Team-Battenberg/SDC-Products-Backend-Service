@@ -4,7 +4,6 @@ module.exports = {
   get: function (req, res) {
     var page = 1;
     var count = 5;
-    console.log(req.query)
     if (req.query.page) {
       page = parseInt(req.query.page);
     }
