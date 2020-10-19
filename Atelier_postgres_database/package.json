@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start-dev": "nodemon index.js",
+    "start-dev": "nodemon -r dotenv/config index.js",
     "start": "node index.js"
   },
   "author": "",
@@ -17,6 +17,7 @@
     "sequelize": "^6.3.5"
   },
   "devDependencies": {
+    "dotenv": "^8.2.0",
     "nodemon": "^2.0.5"
   }
 }

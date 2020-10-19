@@ -1,5 +1,5 @@
-const Product = require('../database/index.js').Product;
-const Feature = require('../database/index.js').Feature;
+const DB = require('../database/index.js').client
+
 
 module.exports = {
   getProducts: function (page,count) {
@@ -11,13 +11,9 @@ module.exports = {
     if (count !== 5) {
       queryLimit = count;
     }
-    return Product.findAll({
-      order: ['product_id'],
-      offset: queryOffset,
-      limit: queryLimit
-    })
+    return DB.query(`SELECT "product_id", "name", "slogan", "description", "category", "default_price" FROM "products-database-v3"."products" AS "products" ORDER BY "products"."product_id" LIMIT ${queryLimit} OFFSET ${queryOffset};`)
     .then((results) => {
-      return results;
+      return results.rows;
     })
     .catch((err) => {
       console.log('error getting the products from db', err);

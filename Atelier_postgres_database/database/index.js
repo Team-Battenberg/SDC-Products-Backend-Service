@@ -1,185 +1,42 @@
-const { Sequelize, DataTypes } = require('sequelize');
-const HOST = process.env.PGHOST || '127.0.0.1'
-const DATABASE = process.env.PGDATABASE || 'SDC-test'
-const USER = process.env.PGUSER || null
-const PASSWORD = process.env.PGPASSWORD || null
-const PORT = 5432
-const DB = new Sequelize(DATABASE, USER, PASSWORD, {
-  host: HOST,
-  port: 5432,
-  dialect: 'postgres',
-  define: {
-    freezeTableName: true,
-    timestamps: false
-  },
-  pool: {
-    max: 5,
-    min: 0,
-    idle: 10000
-  },
-  schema: 'products-database-v3'
+const { Client } = require('pg')
+const client = new Client({
+  host: process.env.PGHOST,
+  user: process.env.PGUSER,
+  password: process.env.PGPASSWORD,
+  database: process.env.PGDATABASE,
 });
-
-DB.authenticate()
-  .then(function() {
-      console.log(`Connection has been established successfully on ${HOST} ${PORT}`);
-  })
-  .catch(function (err) {
-      console.log('Unable to connect to the database:', err);
-});
+client.connect()
+  .then(() => console.log(`Connected to pg on port ${process.env.PGPORT}`))
+  .catch(err => console.error('connection error', err.stack))
+module.exports.client = client
 
 
-const Product = DB.define('products', {
-  product_id: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    primaryKey: true
-  },
-  name: {
-    type: DataTypes.STRING(75),
-    allowNull: false
-  },
-  slogan: {
-    type: DataTypes.STRING(150),
-    allowNull: false
-  },
-  description: {
-    type: DataTypes.TEXT,
-    allowNull: false
-  },
-  category: {
-    type: DataTypes.STRING(40),
-    allowNull: false
-  },
-  default_price: {
-    type: DataTypes.INTEGER,
-    allowNull: false
-  }
-});
-
-const Style = DB.define('product_styles', {
-  style_id: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    primaryKey: true
-  },
-  product_id: {
-    type: DataTypes.INTEGER,
-    allowNull: false
-  },
-  name: {
-    type: DataTypes.STRING(75),
-    allowNull: false
-  },
-  sale_price: {
-    type: DataTypes.INTEGER,
-    allowNull: false
-  },
-  original_price: {
-    type: DataTypes.INTEGER,
-    allowNull: false
-  },
-  default_style: {
-    type: DataTypes.INTEGER,
-    allowNull: false
-  }
-});
-
-const Sku = DB.define('skus', {
-  sku_id: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    primaryKey: true
-  },
-  style_id: {
-    type: DataTypes.INTEGER,
-    allowNull: false
-  },
-  size: {
-    type: DataTypes.STRING(10),
-    allowNull: false
-  },
-  quantity: {
-    type: DataTypes.INTEGER,
-    allowNull: false
-  }
-});
-
-const Feature = DB.define('features', {
-  feature_id: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    primaryKey: true
-  },
-  product_id: {
-    type: DataTypes.INTEGER,
-    allowNull: false
-  },
-  feature: {
-    type: DataTypes.STRING(50),
-    allowNull: false
-  },
-  value: {
-    type: DataTypes.STRING(50),
-    allowNull: true
-  }
-});
-
-const Related = DB.define('related_products', {
-  relation_id: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    primaryKey: true
-  },
-  product_id: {
-    type: DataTypes.INTEGER,
-    allowNull: false
-  },
-  product_id_1: {
-    type: DataTypes.INTEGER,
-    allowNull: false
-  }
-});
-
-const Photo = DB.define('product_photos', {
-  photo_id: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    primaryKey: true
-  },
-  style_id: {
-    type: DataTypes.INTEGER,
-    allowNull: false
-  },
-  url: {
-    type: DataTypes.TEXT,
-    allowNull: false
-  },
-  thumbnail_url: {
-    type: DataTypes.TEXT,
-    allowNull: false
-  }
-});
-
-Product.hasMany(Style, { foreignKey: 'product_id' });
-Style.belongsTo(Product, { foreignKey: 'product_id' });
-
-Product.hasMany(Feature, { foreignKey: 'product_id' });
-Feature.belongsTo(Product, { foreignKey: 'product_id' });
-
-Product.hasMany(Related, { foreignKey: 'product_id' });
-Related.belongsTo(Product, { foreignKey: 'product_id' });
-
-Style.hasMany(Photo, { foreignKey: 'style_id' });
-Photo.belongsTo(Style, { foreignKey: 'style_id' });
-
-Style.hasMany(Sku, { foreignKey: 'style_id' });
-Sku.belongsTo(Style, { foreignKey: 'style_id' });
+/*products query
+SELECT "product_id", "name", "slogan", "description", "category", "default_price" FROM "products-database-v3"."products" AS "products" ORDER BY "products"."product_id" LIMIT 5 OFFSET 0;
+*/
 
 
-exports.Product = Product;
-exports.Style = Style;
-exports.Feature = Feature;
-exports.Related = Related;
-exports.Sku = Sku;
-exports.Photo = Photo;
+/*product by id query
+//product
+SELECT "product_id", "name", "slogan", "description", "category", "default_price" FROM "products-database-v3"."products" AS "products" WHERE "products"."product_id" = '54343';
+//features
+SELECT "feature", "value" FROM "products-database-v3"."features" AS "features" WHERE "features"."product_id" = '54343';
+*/
+
+
+
+/*style query
+//styles
+SELECT "style_id", "name", "sale_price", "original_price", "default_style" FROM "products-database-v3"."product_styles" AS "product_styles" WHERE "product_styles"."product_id" = '11';
+//photos
+SELECT "url", "thumbnail_url" FROM "products-database-v3"."product_photos" AS "product_photos" WHERE "product_photos"."style_id" = 53;
+//skus
+SELECT "sku_id", "size", "quantity" FROM "products-database-v3"."skus" AS "skus" WHERE "skus"."style_id" = 53;
+*/
+
+
+
+/* related query
+SELECT "product_id_1" FROM "products-database-v3"."related_products" AS "related_products" WHERE "related_products"."product_id" = '1';
+*/
+
