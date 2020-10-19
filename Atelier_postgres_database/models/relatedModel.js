@@ -1,4 +1,4 @@
-const DB = require('../database/index.js').client
+const DB = require('../database/index.js').pool
 
 module.exports = {
   getRelated: function (id) {
