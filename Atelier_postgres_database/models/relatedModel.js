@@ -1,17 +1,12 @@
-const Related = require('../database/index.js').Related;
+const DB = require('../database/index.js').client
 
 module.exports = {
   getRelated: function (id) {
     var relatedIds = [];
-    return Related.findAll({
-      attributes: ['product_id_1'],
-      where: {
-        product_id: id
-      }
-    })
+    return DB.query(`SELECT "product_id_1" FROM "products-database-v3"."related_products" AS "related_products" WHERE "related_products"."product_id" = ${id};`)
     .then((relatedEntries) => {
-      relatedEntries.forEach((entry) => {
-        relatedIds.push(entry.dataValues.product_id_1);
+      relatedEntries.rows.forEach((entry) => {
+        relatedIds.push(entry.product_id_1);
       })
       return relatedIds;
     })

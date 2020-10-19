@@ -20,23 +20,14 @@ module.exports = {
     })
   },
   getProductsById: function (id) {
-    var product = Product.findOne({
-        where: {
-          product_id: id
-        }
-    })
+    var product = DB.query(`SELECT "product_id", "name", "slogan", "description", "category", "default_price" FROM "products-database-v3"."products" AS "products" WHERE "products"."product_id" = ${id};`)
 
-    var features = Feature.findAll({
-      attributes: ['feature','value'],
-      where: {
-        product_id: id
-      }
-    })
+    var features = DB.query(`SELECT "feature", "value" FROM "products-database-v3"."features" AS "features" WHERE "features"."product_id" = ${id};`)
 
   return Promise.all([product, features])
     .then((responses) => {
-      var product = responses[0].dataValues;
-      var features = responses[1];
+      var product = responses[0].rows[0];
+      var features = responses[1].rows;
       product['features'] = features;
       return product;
     })

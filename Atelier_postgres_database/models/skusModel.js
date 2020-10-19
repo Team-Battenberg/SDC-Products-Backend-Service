@@ -1,4 +1,4 @@
-const Sku = require('../database/index.js').Sku;
+const DB = require('../database/index.js').client
 
 module.exports = {
   getSkus: function () {
