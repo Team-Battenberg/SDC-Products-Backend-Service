@@ -1,6 +1,17 @@
 const DB = require('../database/index.js').pool
+const { GET, SET, EXPIRE } = require('../cache/index.js');
 
 module.exports = {
+  getStylesCached: function (id) {
+    var newKey = `pid:${id}`
+    return GET(newKey)
+      .then((result) => {
+        return result;
+      })
+      .catch((err) => {
+        console.log('error in getting cached styles', err)
+      })
+  },
   getStyles: function (id) {
   var resultObj = {product_id: id}
   var styleIds = []
@@ -13,11 +24,10 @@ module.exports = {
         styleResults.push(style)
         styleIds.push(style.style_id)
       })
-      resultObj.results = styleResults
+      resultObj.results = styleResults;
       var stylePhotoSets = styleIds.map((currId) => {
         return DB.query(`SELECT "url", "thumbnail_url" FROM "products-database-v3"."product_photos" AS "product_photos" WHERE "product_photos"."style_id" = ${currId};`)
       })
-
       var styleSkuSets = styleIds.map((currId) => {
         return DB.query(`SELECT "sku_id", "size", "quantity" FROM "products-database-v3"."skus" AS "skus" WHERE "skus"."style_id" = ${currId};`)
       })
@@ -36,6 +46,15 @@ module.exports = {
           resultObj.results[pi].skus[entry.sku_id].quantity = entry.quantity
         }))
       }
+      var newKey = `pid:${id}`;
+      var cacheEntry = JSON.stringify(resultObj);
+      SET(newKey, cacheEntry)
+        .then(() => {
+          if (newKey !== 'pid:1') {
+            EXPIRE(newKey, 5);
+          }
+        })
+        .catch((err) => {console.log('error caching with redis', err)})
       return resultObj;
     })
     .catch((err) => {
