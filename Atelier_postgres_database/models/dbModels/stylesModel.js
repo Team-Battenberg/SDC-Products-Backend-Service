@@ -1,15 +1,7 @@
-const DB = require('../database/index.js').pool;
-const { GET, SET, EXPIRE } = require('../cache/index.js');
+const DB = require('../../database/index.js').pool;
+const { stylesCacheModel } = require('../cacheModels/index.js');
 
 module.exports = {
-  getStylesCached(id) {
-    const newKey = `pid:${id}`;
-    return GET(newKey)
-      .then((result) => result)
-      .catch((err) => {
-        throw new Error('error in getting cached styles', err);
-      });
-  },
   getStyles(id) {
     const resultObj = { product_id: id };
     const styleIds = [];
@@ -40,19 +32,11 @@ module.exports = {
             resultObj.results[pi].skus[entry.sku_id].quantity = entry.quantity;
           }));
         }
-        const newKey = `pid:${id}`;
-        const cacheEntry = JSON.stringify(resultObj);
-        SET(newKey, cacheEntry)
-          .then(() => {
-            if (newKey !== 'pid:1') {
-              EXPIRE(newKey, 5);
-            }
-          })
-          .catch((err) => { throw new Error('error caching with redis', err); });
+        stylesCacheModel.setStylesCached(id, resultObj);
         return resultObj;
       })
       .catch((err) => {
-        throw new Error('error finding that product in db', err);
+        console.log('error finding that product in db', err);
       });
   },
 };

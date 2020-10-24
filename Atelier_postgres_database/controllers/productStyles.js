@@ -1,4 +1,5 @@
-const { stylesModel } = require('../models/index.js');
+const { stylesCacheModel } = require('../models/cacheModels/index.js');
+const { stylesModel } = require('../models/dbModels/index.js');
 const { LOG } = require('../logging/index.js');
 
 module.exports = {
@@ -6,7 +7,7 @@ module.exports = {
     const startTime = new Date();
     LOG.increment('productsStyles_get');
     const id = req.params.product_id;
-    stylesModel.getStylesCached(id)
+    stylesCacheModel.getStylesCached(id)
       .then((cacheResponse) => {
         const cacheEnd = new Date() - startTime;
         if (cacheResponse !== null) {
@@ -26,7 +27,7 @@ module.exports = {
         res.status(404).send('Could not find those styles');
         const dbEnd = new Date() - startTime;
         LOG.timing('productsStyles_db_response_fail', dbEnd);
-        throw new Error('error sending that styles to client', err);
+        console.log('error sending that styles to client', err);
       });
   },
 };

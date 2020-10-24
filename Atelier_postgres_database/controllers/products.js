@@ -1,4 +1,5 @@
-const { productsModel } = require('../models/index.js');
+const { productsCacheModel } = require('../models/cacheModels/index.js');
+const { productsModel } = require('../models/dbModels/index.js');
 const { LOG } = require('../logging/index.js');
 
 module.exports = {
@@ -13,7 +14,7 @@ module.exports = {
     if (req.query.count) {
       count = parseInt(req.query.count, 10);
     }
-    productsModel.getProductsCached(page, count)
+    productsCacheModel.getProductsCached(page, count)
       .then((result) => {
         const cacheEnd = new Date() - startTime;
         if (result !== null) {
@@ -33,7 +34,7 @@ module.exports = {
         res.status(404).send('Could not retrieve the products');
         const dbEnd = new Date() - startTime;
         LOG.timing('products_db_response_fail', dbEnd);
-        throw new Error('error sending results to client', err);
+        console.log('error sending results to client', err);
       });
   },
 };
