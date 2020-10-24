@@ -38,5 +38,5 @@ APP.use((error, req, res, next) => {
 });
 
 APP.listen(PORT, () => {
-  throw new Error(`Products Microservice listening on port ${PORT}`);
+  console.log(`Products Microservice listening on port ${PORT}`);
 });

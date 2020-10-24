@@ -1,4 +1,5 @@
-const { relatedModel } = require('../models/index.js');
+const { relatedCacheModel } = require('../models/cacheModels/index.js');
+const { relatedModel } = require('../models/dbModels/index.js');
 const { LOG } = require('../logging/index.js');
 
 module.exports = {
@@ -6,7 +7,7 @@ module.exports = {
     const startTime = new Date();
     LOG.increment('productsRelated_get');
     const id = req.params.product_id;
-    relatedModel.getRelatedCached(id)
+    relatedCacheModel.getRelatedCached(id)
       .then((cacheResponse) => {
         const cacheEnd = new Date() - startTime;
         if (cacheResponse !== null) {
@@ -26,7 +27,7 @@ module.exports = {
         res.status(404).send('Could not find related products');
         const dbEnd = new Date() - startTime;
         LOG.timing('productsRelated_db_response_fail', dbEnd);
-        throw new Error('error sending related products to client', err);
+        console.log('error sending related products to client', err);
       });
   },
 };
