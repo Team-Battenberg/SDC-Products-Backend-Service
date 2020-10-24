@@ -1,32 +1,32 @@
-const productsModel = require('../models/index.js').productsModel;
+const { productsModel } = require('../models/index.js');
 const { LOG } = require('../logging/index.js');
 
 module.exports = {
-  get: function (req, res) {
-    var startTime = new Date();
-    LOG.increment("productsById_get");
-    var id = req.params.product_id
+  get(req, res) {
+    const startTime = new Date();
+    LOG.increment('productsById_get');
+    const id = req.params.product_id;
     productsModel.getProductsByIdCached(id)
-      .then((result) => {
-        var cacheEnd = new Date() - startTime;
-        if (result !== null) {
-          res.status(200).send(JSON.parse(result))
-          LOG.timing("productsById_cache_response_success", cacheEnd);
+      .then((cacheResponse) => {
+        const cacheEnd = new Date() - startTime;
+        if (cacheResponse !== null) {
+          res.status(200).send(JSON.parse(cacheResponse));
+          LOG.timing('productsById_cache_response_success', cacheEnd);
         } else {
-          LOG.timing("productsById_cache_response_null", cacheEnd);
+          LOG.timing('productsById_cache_response_null', cacheEnd);
           productsModel.getProductsById(id)
-            .then((result) => {
-              res.status(200).send(result)
-              var dbEnd = new Date() - startTime;
-              LOG.timing('productsById_db_response', dbEnd)
-            })
+            .then((dbResponse) => {
+              res.status(200).send(dbResponse);
+              const dbEnd = new Date() - startTime;
+              LOG.timing('productsById_db_response', dbEnd);
+            });
         }
       })
       .catch((err) => {
-        console.log('error sending that product to client', err);
         res.status(404).send('Could not find that product');
-        var dbEnd = new Date() - startTime;
+        const dbEnd = new Date() - startTime;
         LOG.timing('productsById_db_response_fail', dbEnd);
-      })
-  }
-}
+        throw new Error('error sending that product to client', err);
+      });
+  },
+};
