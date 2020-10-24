@@ -130,3 +130,44 @@ This route will return an array containing the product ids of any product that i
 #### *Example:*  `/products/1456/related` - will return the product id numbers that are consdidered to be related to the product with a product id of 1456
 
 -----------------------------------------------------------------------------------------------------------------------------
+
+## Performance
+
+#### Overview:
+
+For testing the entire service was deployed to a single t2.micro instance on AWS.  The Server, PostgreSQL database, and Redis Cache all ran as networked docker containers on the instance.  Loader.io was used to stress test the various routes.  Tests were configured to target datasets withing the last 20% of their respective tables.  The database was loaded with extensive amounts of data.
+
+Products table - ~ 1,000,000 entries <br>
+Product Styles table - ~ 4,600,000 entries <br>
+Product Features table - ~ 2,200,000 entries <br>
+Product Photos table -  ~ 13,400,000 entries <br>
+Related Products table - ~ 4,500,000 entries <br>
+Product Skus table - ~ 27,000,000 entries <br>
+
+-----------------------------------------------------------------------------------------------------------------------------
+
+### Basic Route Performance:
+
+Performance was benchmarked by how many requests/second the service could handle while maintaining an average response time below 2000ms.  The tests are configured to target endpoints that will reach into the last 20% of the stored data.  The enpoints for each individual request are randomized within the range so as to bypass the Redis caching effciencies and simulate realistic load scenarios.
+
+#### Products endpoint - random pagination:  850 Requests/Second
+
+#### Product by ID endpoint - random product id: 700 Requests/Second
+
+#### Product Styles endpoint - random product id: 400 Requests/Second
+
+#### Related Products endpoint - random product id: 700 Requests/Second
+
+-----------------------------------------------------------------------------------------------------------------------------
+
+### Abnormal Traffic Performance:
+
+Redis caching was used to cache results for 5 seconds before expiring.  If a specific enpoint sees an abnormally high amount of traffic the Redis cache will handle the requests which reduces the load on the database and drastically improves the servers ability to manage the increased traffic.
+
+#### Products endpoint - Same Page & Count Parameters:  TBD Requests/Second
+
+#### Product by ID endpoint - Specific product id : TBD Requests/Second
+
+#### Product Styles endpoint - Specific product id: TBD Requests/Second
+
+#### Related Products endpoint - Specific product id: TBD Requests/Second
