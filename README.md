@@ -152,11 +152,11 @@ Performance was benchmarked by how many requests/second the service could handle
 
 #### Products endpoint - random pagination:  850 Requests/Second
 
-#### Product by ID endpoint - random product id: 700 Requests/Second
+#### Product by ID endpoint - random product id: 750 Requests/Second
 
-#### Product Styles endpoint - random product id: 400 Requests/Second
+#### Product Styles endpoint - random product id: 300 Requests/Second
 
-#### Related Products endpoint - random product id: 700 Requests/Second
+#### Related Products endpoint - random product id: 925 Requests/Second
 
 -----------------------------------------------------------------------------------------------------------------------------
 
@@ -164,10 +164,10 @@ Performance was benchmarked by how many requests/second the service could handle
 
 Redis caching was used to cache results for 5 seconds before expiring.  If a specific enpoint sees an abnormally high amount of traffic the Redis cache will handle the requests which reduces the load on the database and drastically improves the servers ability to manage the increased traffic.
 
-#### Products endpoint - Same Page & Count Parameters:  TBD Requests/Second
+#### Products endpoint - Same Page & Count Parameters:  1400 Requests/Second
 
-#### Product by ID endpoint - Specific product id : TBD Requests/Second
+#### Product by ID endpoint - Specific product id : 1700 Requests/Second
 
-#### Product Styles endpoint - Specific product id: TBD Requests/Second
+#### Product Styles endpoint - Specific product id: 1500 Requests/Second
 
-#### Related Products endpoint - Specific product id: TBD Requests/Second
+#### Related Products endpoint - Specific product id: 1800 Requests/Second
