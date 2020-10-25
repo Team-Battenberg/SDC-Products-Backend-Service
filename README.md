@@ -55,8 +55,8 @@ Default port will be 4323 if PORT environment variable is not provided.
 
 ## Tech Stack
 
-   * Node
-   * Express
+   * Node.js
+   * AWS - EC2
    * Docker
    * PostgreSQL
    * Redis
@@ -135,7 +135,7 @@ This route will return an array containing the product ids of any product that i
 
 #### Overview:
 
-For testing the entire service was deployed to a single t2.micro instance on AWS.  The Server, PostgreSQL database, and Redis Cache all ran as networked docker containers on the instance.  Loader.io was used to stress test the various routes.  Tests were configured to target datasets withing the last 20% of their respective tables.  The database was loaded with extensive amounts of data.
+For testing the entire service was deployed to a single t2.micro instance on AWS.  The Server, PostgreSQL database, and Redis Cache all ran as networked Docker containers on the instance.  Loader.io was used to stress test the various routes.  Tests were configured to target datasets withing the last 20% of their respective tables.  The database was loaded with extensive amounts of data.
 
 Products table - ~ 1,000,000 entries <br>
 Product Styles table - ~ 4,600,000 entries <br>
