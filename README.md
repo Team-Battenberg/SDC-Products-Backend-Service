@@ -150,13 +150,13 @@ Product Skus table - ~ 27,000,000 entries <br>
 
 Performance was benchmarked by how many requests/second the service could handle while maintaining an average response time below 2000ms.  The tests are configured to target endpoints that will reach into the last 20% of the stored data.  The enpoints for each individual request are randomized within the range so as to bypass the Redis caching effciencies and simulate realistic load scenarios.
 
-#### Products endpoint - random pagination:  850 Requests/Second
+#### [Products endpoint - random pagination:  850 Requests/Second](https://bit.ly/35z5BVW)
 
-#### Product by ID endpoint - random product id: 750 Requests/Second
+#### [Product by ID endpoint - random product id: 750 Requests/Second](https://bit.ly/3kG0N7e)
 
-#### Product Styles endpoint - random product id: 300 Requests/Second
+#### [Product Styles endpoint - random product id: 300 Requests/Second](https://bit.ly/35qCILi)
 
-#### Related Products endpoint - random product id: 925 Requests/Second
+#### [Related Products endpoint - random product id: 925 Requests/Second](https://bit.ly/34qR8vF)
 
 -----------------------------------------------------------------------------------------------------------------------------
 
@@ -164,10 +164,10 @@ Performance was benchmarked by how many requests/second the service could handle
 
 Redis caching was used to cache results for 5 seconds before expiring.  If a specific enpoint sees an abnormally high amount of traffic the Redis cache will handle the requests which reduces the load on the database and drastically improves the servers ability to manage the increased traffic.
 
-#### Products endpoint - Same Page & Count Parameters:  1400 Requests/Second
+#### [Products endpoint - Same Page & Count Parameters:  1400 Requests/Second](https://bit.ly/2HBfFWr)
 
-#### Product by ID endpoint - Specific product id : 1700 Requests/Second
+#### [Product by ID endpoint - Specific product id : 1700 Requests/Second](https://bit.ly/35zQrj4)
 
-#### Product Styles endpoint - Specific product id: 1500 Requests/Second
+#### [Product Styles endpoint - Specific product id: 1500 Requests/Second](https://bit.ly/35vztSV)
 
-#### Related Products endpoint - Specific product id: 1800 Requests/Second
+#### [Related Products endpoint - Specific product id: 1800 Requests/Second](https://bit.ly/35ytwod)
