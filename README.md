@@ -1,4 +1,4 @@
-# SDC - Products Backend Service
+# Products Backend Micro-Service
 
 ### Scalable REST API to serve as interface between a database and a front-end application
 
