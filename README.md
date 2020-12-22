@@ -73,7 +73,7 @@ Default port will be 4323 if PORT environment variable is not provided.
 #### Endpoint: `/products`
 
 #### GET: 
-This route returns a set of products in the response.   It uses server side pagination to send a specifc subset of the stored products to the user.  The user can provide optional query parameters to the route to specifify the number of results per page and whcih page to return.
+This route returns a set of products in the response.   It uses server side pagination to send a specifc subset of the stored products to the user.  The user can provide optional query parameters to the route to specifify the number of results per page and which page to return.
 
 **Query Parameters:**
 
