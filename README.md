@@ -10,13 +10,13 @@
 #### 1. [Install](#Install)
 #### 2. [Tech Stack](#Tech-Stack)
 #### 3. [Routes](#Routes)
-   1. Products
-   1. Products By Id
-   1. Styles
-   1. Related
+   1. [Products](#Products)
+   1. [Products By Id](#Products-by-id)
+   1. [Styles](#Product-Styles)
+   1. [Related](#Related-Products)
 #### 4. [Performance](#Performance)
-   1. Basic Route Performance
-   1. Abnormal Traffic Handling with Redis
+   1. [Basic Route Performance](#Basic-Route-Performance)
+   1. [Abnormal Traffic Handling with Redis](#Abnormal-Traffic-Performance)
    
 -----------------------------------------------------------------------------------------------------------------------------
 
@@ -88,7 +88,7 @@ If no query parameters are specified results 1 thru 5 will be returned
 
 -----------------------------------------------------------------------------------------------------------------------------
 
-### Product by id 
+### Product-by-id 
 
 #### Endpoint: `/products/:product_id`
 
@@ -103,7 +103,7 @@ This route will return the full details of a a single product.
 
 -----------------------------------------------------------------------------------------------------------------------------
 
-### Product Styles 
+### Product-Styles 
 
 #### Endpoint: `/products/:product_id/styles`
 
@@ -118,7 +118,7 @@ This route will return an array containing every style associated with the speci
 
 -----------------------------------------------------------------------------------------------------------------------------
 
-### Related Products 
+### Related-Products 
 
 #### Endpoint: `/products/:product_id/related`
 
@@ -148,7 +148,7 @@ Product Skus table - ~ 27,000,000 entries <br>
 
 -----------------------------------------------------------------------------------------------------------------------------
 
-### Basic Route Performance:
+### Basic-Route-Performance:
 
 Performance was benchmarked by how many requests/second the service could handle while maintaining an average response time below 2000ms.  The tests are configured to target endpoints that will reach into the last 20% of the stored data.  The enpoints for each individual request are randomized within the range so as to bypass the Redis caching effciencies and simulate realistic load scenarios.
 
@@ -162,7 +162,7 @@ Performance was benchmarked by how many requests/second the service could handle
 
 -----------------------------------------------------------------------------------------------------------------------------
 
-### Abnormal Traffic Performance:
+### Abnormal-Traffic-Performance:
 
 Redis caching was used to cache results for 5 seconds before expiring.  If a specific enpoint sees an abnormally high amount of traffic the Redis cache will handle the requests which reduces the load on the database and drastically improves the servers ability to manage the increased traffic.
 
