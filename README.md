@@ -26,7 +26,7 @@ If using docker an image of this project can be found at the link below:
 
 [joed11/products-service](https://hub.docker.com/repository/docker/joed11/sdc-product-service)
 
-> *(Note:  The image above relies on the environment variables below to be provided. For this project the image was run via docker-compose with and was dependent on Redis and Postgres images.)*
+> *(Note:  The image above relies on the environment variables below to be provided. For this project the image was run via docker-compose and was dependent on Redis and Postgres images.)*
 
 
 Install dependencies:
