@@ -7,14 +7,14 @@
 -----------------------------------------------------------------------------------------------------------------------------
 
 ## Table of Contents
-#### 1. Install
-#### 2. Tech Stack
-#### 3. Routes
+#### 1. [Install](#Install)
+#### 2. [Tech Stack](#Tech-Stack)
+#### 3. [Routes](#Routes)
    1. Products
    1. Products By Id
    1. Styles
    1. Related
-#### 4. Performance
+#### 4. [Performance](#Performance)
    1. Basic Route Performance
    1. Abnormal Traffic Handling with Redis
    
@@ -55,7 +55,7 @@ Default port will be 4323 if PORT environment variable is not provided.
 
 -----------------------------------------------------------------------------------------------------------------------------
 
-## Tech Stack
+## Tech-Stack
 
    * Node.js
    * AWS - EC2
